@@ -22,7 +22,7 @@
   <link rel="stylesheet" media="screen" href="extensions/scale/deck.scale.css">
 
   <!-- Style theme. More available in /themes/style/ or create your own. -->
-  <link rel="stylesheet" media="screen" href="themes/style/sandstone.css">
+  <link rel="stylesheet" media="screen" href="themes/style/web-2.0.css">
   <link rel="stylesheet" media="screen" href="custom_styles.css">
 
   <!-- Transition theme. More available in /themes/transition/ or create your own. -->
@@ -43,75 +43,186 @@
 
     <!-- Begin slides -->
     <section class="slide" id="title-slide" style="background-color: #28264d;">
-      <h2><small>Introduction to</small> <img src="images/heroku-Logo.jpg" alt="Heroku"/> <small>By Michael Mottola</small></h2>
+      <h2><small>Introduction to</small> <img src="images/heroku-Logo.jpg" alt="Heroku" style="margin: 40px auto; height: 250px; width: auto;"/> <small>By Michael Mottola</small></h2>
     </section>
 
 
     <section class="slide">
       <h2>What is Heroku?</h2>
       <div>
-        <h3>A Cloud Platform as a Service (PaaS) Provider</h3>
+        <h3>A Cloud Platform as a Service (PaaS)</h3>
         <ul>
-            <li>Company based out of San Francisco</li>
-            <li>One of the first cloud PaaS providers, launched in 2007</li>
-            <li>Originally support only Ruby</li>
-            <li>Acquired by Salesforce.com in December 2010</li>
-            <li>Yukihiro "Matz" Matsumoto, joined the company as Chief Architect</li>
+            <li>Lets you easily deploy, run and manage applications written in:
+                <div class="center"><img src="images/heroku-languages.jpg" style="max-height: 450px; margin-top: 10px; width:auto;" /></div>
+            </li>
         </ul>
       </div>
     </section>
 
     <section class="slide">
-        <h2>Heroku Supports</h2>
-        <div><img src="images/heroku-languages.jpg" style="max-height: 350px; width:auto;" /></div>
+      <h2>Company Info</h2>
+      <div>
+          <ul>
+              <li>Based out of San Francisco</li>
+              <li>Founded in 2007 by application developers, as part of Y Combinator</li>
+              <li>Originally supported only Ruby</li>
+              <li>Acquired by Salesforce.com in December 2010 (For $250 million dollars)</li>
+              <li>Yukihiro "Matz" Matsumoto, joined the company as Chief Architect</li>
+          </ul>
+      </div>
     </section>
 
     <section class="slide">
-        <h2>Heroku Database Supports</h2>
+        <h2>How Heroku Works</h2>
+
         <ul>
-            <li>PostgreSQL</li>
-            <li>Cloudant</li>
-            <li>CouchDB</li>
-            <li>MongoDB</li>
-            <li>Redis</li>
+            <li>Heroku platform builds your application from your source code and dependency descriptions.</li>
+            <li>Executes a command to run your application (ex: starting a server)</li>
+            <li>How you define your application and dependencies varies:
+                <ul>
+                    <li><strong>Ruby</strong> uses <strong>Gemfile</strong></li>
+                    <li><strong>Python</strong> uses <strong>requirements.txt</strong></li>
+                    <li><strong>Node.js</strong> uses <strong>package.json</strong></li>
+                    <li><strong>Java</strong> uses <strong>pcm.xml</strong></li>
+                </ul>
+            </li>
         </ul>
 
-        <p>Heroku gives you choice of running on a shared or dedicated database package.</p>
     </section>
 
     <section class="slide">
-      <h2>Heroku Toolbelt</h2>
-      <p>Heroku Command Line Interface (CLI) for managing and scaling applications and add-ons.</p>
-      <pre><a href="https://toolbelt.heroku.com/">https://toolbelt.heroku.com/</a></pre>
-      <pre>$ heroku login
+        <h2>How Heroku Runs Your Application</h2>
+
+        <ul>
+            <li class="slide">If using an established framework, Heroku figures it how to run your application:
+                <ul>
+                    <li>Ruby is <strong>rails server</strong></li>
+                    <li>Djano is <strong>python &lt;app&gt;/manage.py runserver</strong></li>
+                    <li>Node.js uses main field in <strong>package.json</strong></li>
+                </ul>
+            </li>
+            <li class="slide">Else you must explicitly declare how your app is executed:
+                <ul>
+                    <li>Create text file called <strong>Procfile</strong>
+                        <br/>
+                        <div class="slide">
+                            <pre style="font-size: 0.8em;" >web: bundle exec rails server -p $PORT</pre>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Where Is Your Application Running</h2>
+
+      <ul>
+          <li>Lightweight Linux containers that runs a single user-specified command, called a <strong>Dyno</strong></li>
+          <li>Single dyno can serve thousands of requests per second</li>
+          <li>Types of Dynos:
+              <ul>
+                  <li><strong>Web Dynos:</strong> only receive HTTP traffic from Heroku's routers</li>
+                  <li><strong>Worker Dynos:</strong> used for background jobs, queueing and timed jobs</li>
+                  <li><strong>One-off Dynos:</strong> temporary, runs detached or from terminal</li>
+              </ul>
+          </li>
+          <li>Under the hood, Heroku is using Amazon Web Services; EC2 instances</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Heroku Router</h2>
+
+      <ul>
+          <li>Inbound requests are received by a load balancer and passed to a set of routers</li>
+          <li>Routers determine location of your application's web dynos and forward the HTTP request</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Heroku Toolbelt</h2>
+        <p>Heroku Command Line Interface (CLI) for managing and scaling applications and add-ons.</p>
+        <pre><a href="https://toolbelt.heroku.com/">https://toolbelt.heroku.com/</a></pre>
+        <pre>$ heroku login
 Enter your Heroku credentials.
-Email: adam@example.com
+Email: michael@example.com
 Password (typing will be hidden):
-Authentication successful.</pre>
+Authentication successful.
+        </pre>
     </section>
 
     <section class="slide">
-      <h2>About Big Data</h2>
-      <ul>
-      <li>It's about generating value from very large data sets</li>
-      <li>The amount of data is growing exponentially for many reasons:
-          <ul>
-            <li>retailers building databases of customer activity</li>
-            <li>logistics, financial, government, & health are capturing more data</li>
-            <li>social media</li>
-          </ul>
-      </li>
-      </ul>
+        <h2>Create a Heroku App</h2>
 
-      <blockquote class="slide">Provide opportunities to find insights into new and emerging types of data.<p><cite>IBM</cite></p></blockquote>
-      <blockquote class="slide">Holds the promise of giving enterprises deeper insights into your customers, partners, and business.<p><cite>Oracle</cite></p></blockquote>
-    </section> 
+        <pre>$ heroku create my-app
+Creating my-app... done, stack is cedar-14
+http://my-app.herokuapp.com/ | git@heroku.com:my-app.git
+</pre>
+    </section>
 
     <section class="slide">
-      <h1>Learn More</h1>
-      <ul>
-        <li><strong>Heroku Dev Center</strong><a href="https://devcenter.heroku.com/">https://devcenter.heroku.com/</a></li>
-      </ul>
+        <h2>Deploying Your Application</h2>
+
+        <ul>
+          <li>Heroku primarily uses <strong>git</strong> for deploying applications</li>
+          <li>GitHub Integration, Dropbox Sync and an API are also options</li>
+        </ul>
+
+        <div class="slide">
+          <p>Deploy command:</p>
+          <pre>git push heroku master</pre>
+        </div>
+
+    </section>
+
+    <section class="slide">
+        <h2>Scaling Your Application</h2>
+
+        <ul>
+            <li>Scaling Horizontally: add more dynos
+                <ul>
+                    <li>more web dynos means more concurrent HTTP requests</li>
+                </ul>
+            </li>
+           <li>Scaling Vertically: using bigger dynos (increase RAM)</li>
+        </ul>
+
+        <p>Scaling with command line:</p>
+        <pre>heroku ps:scale web=2</pre>
+    </section>
+
+    <section class="slide">
+        <h2>Other Heroku Toolbelt Commands</h2>
+
+        <ul>
+            <li>General commands:
+                <ul>
+                    <li><strong>heroku apps</strong></li>
+                    <li><strong>heroku keys</strong></li>
+                    <li><strong>heroku keys:add</strong></li>
+                </ul>
+            </li>
+
+            <li>App Specific Commands
+                <ul>
+                    <li><strong>heroku create</strong></li>
+                    <li><strong>heroku config</strong></li>
+                    <li><strong>heroku ps</strong></li>
+                    <li><strong>heroku info</strong></li>
+                    <li><strong>heroku logs</strong></li>
+                    <li><strong>heroku run</strong></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Learn More</h2>
+        <ul>
+            <li>Run <strong>heroku help</strong></li>
+            <li><strong>Heroku Dev Center</strong><br/><a href="https://devcenter.heroku.com/">https://devcenter.heroku.com/</a></li>
+        </ul>
     </section>
 
     <section class="slide">
